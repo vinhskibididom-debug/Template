@@ -1,0 +1,114 @@
+using System;
+using System.IO;
+using System.Linq;
+
+using ll = System.Int64;
+
+class vinh
+{
+    static void lhhz()
+    {
+        
+    }
+
+    static void LOVE(string s)
+    {
+        if (File.Exists(s + ".inp"))
+        {
+            zy.r = new FileStream(s + ".inp", FileMode.Open, FileAccess.Read);
+            zy.w = new StreamWriter(new FileStream(s + ".out", FileMode.Create, FileAccess.Write), System.Text.Encoding.ASCII, 65536);
+        }
+        else if (File.Exists("input.txt"))
+        {
+            zy.r = new FileStream("input.txt", FileMode.Open, FileAccess.Read);
+        }
+    }
+
+    static void Main()
+    {
+        zy.init();
+        LOVE("danceteam");
+
+        int t = 1;
+        // t = zy.cin();
+
+        while (t-- > 0) lhhz();
+
+        zy.flush();
+    }
+}
+
+public static class zy
+{
+    public static Stream r; public static StreamWriter w;
+    static byte[] buf = new byte[65536]; static int id = 0, cnt = 0;
+
+    public static void init()
+    {
+        r = Console.OpenStandardInput();
+        w = new StreamWriter(Console.OpenStandardOutput(), System.Text.Encoding.ASCII, 65536);
+    }
+
+    static int Read()
+    {
+        if (id >= cnt)
+        {
+            id = 0;
+            cnt = r.Read(buf, 0, 65536);
+            if (cnt == 0) return -1;
+        }
+        return buf[id++];
+    }
+
+    public static string next()
+    {
+        int c = Read();
+        while (c <= 32)
+        {
+            if (c == -1) return null;
+            c = Read();
+        }
+
+        var sb = new System.Text.StringBuilder();
+
+        while (c > 32)
+        {
+            sb.Append((char)c);
+            c = Read();
+        }
+
+        return sb.ToString();
+    }
+
+    public static int cin() => (int)nl();
+
+    public static ll nl()
+    {
+        int c = Read();
+        while (c <= 32)
+        {
+            if (c == -1) return 0;
+            c = Read();
+        }
+
+        bool neg = false;
+        if (c == '-')
+        {
+            neg = true;
+            c = Read();
+        }
+
+        ll res = 0;
+        while (c > 32)
+        {
+            res = res * 10 + c - '0';
+            c = Read();
+        }
+
+        return neg ? -res : res;
+    }
+
+    public static void cout(object o) => w.Write(o);
+    public static void coutl(object o) => w.WriteLine(o);
+    public static void flush() => w.Flush();
+}
